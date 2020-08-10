@@ -1,11 +1,19 @@
-import React, { useState, useReducer, useEffect, Reducer } from 'react';
+import React, {
+  useState,
+  useReducer,
+  useEffect,
+  useRef,
+  Reducer,
+  PropsWithChildren,
+} from 'react';
 import classNames from 'classnames';
+import { invariant } from '@/components/shared';
 import styles from './avatar.less';
 
 type AvatarShape = 'circle' | 'square';
 type AvatarSize = number | 'large' | 'small' | 'default';
 export interface AvatarProps extends classAndStyleProps {
-  icon?: React.ReactNode;
+  icon?: JSX.Element;
   shape?: AvatarShape;
   size?: AvatarSize;
   src?: string;
@@ -15,17 +23,12 @@ export interface AvatarProps extends classAndStyleProps {
   gap?: number;
 }
 
-interface renderState {
-  renderShape?: AvatarShape;
-  renderSize?: AvatarSize;
-  renderIcon?: boolean;
-  renderSrc?: boolean;
-  renderString?: boolean;
-  renderChildren?: JSX.Element;
+interface avatarState {
+  scale?: string;
+  isImgExist: Boolean;
 }
 
-function handleImgError() {}
-function reducer(state: renderState, action: Partial<renderState>) {
+function reducer(state: avatarState, action: Partial<avatarState>) {
   return {
     ...state,
     ...action,
@@ -40,25 +43,104 @@ function useAvatarProps({
   alt,
   onError,
   gap,
-}: AvatarProps) {
-  const [renderState, dispatchRenderState] = useReducer(reducer, {});
+  children,
+}: PropsWithChildren<AvatarProps>) {
+  const [avatarState, dispatchAvatarState] = useReducer(reducer, {
+    isImgExist: true,
+  });
+  const childRef = useRef<HTMLSpanElement>(null);
+  const wrapperRef = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    dispatchAvatarState({
+      isImgExist: true,
+      scale: 'scale(1)',
+    });
+  }, [src]);
+  useEffect(() => {
+    if (!childRef.current || !wrapperRef.current) {
+      return;
+    }
+    const childWidth = childRef.current!.offsetWidth;
+    const wrapperWidth = wrapperRef.current!.offsetWidth;
+    let scale;
+    if (childWidth > gap! * 2) {
+      if (wrapperWidth > childWidth + gap! * 2) {
+        scale = 'scale(1)';
+      } else {
+        scale = `scale(${(wrapperWidth - gap! * 2) / childWidth})`;
+      }
+      dispatchAvatarState({
+        scale,
+      });
+    }
+  }, [children, gap, size, avatarState.isImgExist]);
+
+  let childToRender;
+  let wrapperClass = [
+    styles.avatar,
+    {
+      [styles.avatarImage]: src && avatarState.isImgExist,
+      [styles.avatarIcon]: icon,
+      [styles.avatarCircle]: shape === 'circle',
+      [styles.avatarSquare]: shape === 'square',
+      [styles.avatarLG]: size === 'large',
+      [styles.avatarSM]: size === 'small',
+    },
+  ];
+  const sizeStyle =
+    typeof size === 'number'
+      ? {
+          width: size,
+          height: size,
+          lineHeight: `${size}px`,
+          fontSize: icon ? size / 2 : 18,
+        }
+      : {};
+  const scaleStyle = {
+    transform: `${avatarState.scale} translateX(-50%)`,
+  };
   function handleImgLoadError() {
     const fallback = onError ? onError() : true;
     fallback &&
-      dispatchRenderState({
-        renderSrc: false,
+      dispatchAvatarState({
+        isImgExist: false,
       });
   }
-  if (src) {
-    dispatchRenderState({
-      renderChildren: <img src={src} onError={handleImgLoadError} />,
-    });
+  if (src && avatarState.isImgExist) {
+    childToRender = (
+      <img src={src} srcSet={srcSet} alt={alt} onError={handleImgLoadError} />
+    );
+  } else if (icon) {
+    childToRender = icon;
+  } else {
+    childToRender = (
+      <span
+        className={styles.avatarString}
+        style={{
+          ...scaleStyle,
+        }}
+        ref={childRef}
+      >
+        {children}
+      </span>
+    );
   }
-  return [renderState];
+  const avatar = (
+    <span
+      className={classNames(wrapperClass)}
+      style={{
+        ...sizeStyle,
+      }}
+      ref={wrapperRef}
+    >
+      {childToRender}
+    </span>
+  );
+  return [avatar];
 }
-export const Avatar: React.FC<AvatarProps> = props => {
-  const [state] = useAvatarProps(props);
-  return <span className={classNames('avatar')}>{state.renderChildren}</span>;
+export const Avatar: React.FC<PropsWithChildren<AvatarProps>> = props => {
+  const [avatar] = useAvatarProps(props);
+  return avatar;
 };
 
 Avatar.defaultProps = {
