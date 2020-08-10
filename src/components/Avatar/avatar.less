@@ -1,0 +1,15 @@
+@import '../shared/less/index.less';
+
+.avatar {
+  position: relative;
+  overflow: hidden;
+  width: @static-size-400;
+  height: @static-size-400;
+  line-height: @static-size-400;
+  &.avatarImage {
+    background: transparent;
+  }
+  .avatarString {
+    transform: scale(1) translate(-50%, 0);
+  }
+}
