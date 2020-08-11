@@ -1,3 +1,8 @@
+---
+date: 2020-1-15
+tags: ['css']
+---
+
 本文主要介绍 fill-available、max-content、min-content、fit-content 四个自适应关键字的作用。
 
 - fill-available

@@ -1,3 +1,8 @@
+---
+date: 2020-1-15
+tags: ['css']
+---
+
 https://stackoverflow.com/questions/43532191/update-css-module-variables-from-javascript
 https://www.yuque.com/antfe/blog/xhnmdn#4
 

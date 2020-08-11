@@ -1,3 +1,8 @@
+---
+date: 2020-1-15
+tags: ['react']
+---
+
 setState 的 batchedUpdate 特性，核心代码如下：
 
 ```ts

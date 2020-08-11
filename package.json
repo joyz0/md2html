@@ -3,6 +3,7 @@
   "scripts": {
     "start": "umi dev",
     "build": "umi build",
+    "build:blog": "node scripts/buildBlogs.js",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
     "test": "umi-test",
@@ -26,6 +27,7 @@
     "@umijs/test": "^3.2.14",
     "classnames": "^2.2.6",
     "lint-staged": "^10.0.7",
+    "markdown-it": "^11.0.0",
     "prettier": "^1.19.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -35,6 +37,9 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.2",
     "@testing-library/react": "^10.4.8",
-    "@types/classnames": "^2.2.10"
+    "@types/classnames": "^2.2.10",
+    "chalk": "^4.1.0",
+    "front-matter": "^4.0.2",
+    "md5": "^2.3.0"
   }
 }

@@ -20,6 +20,21 @@ export default defineConfig({
             },
           ],
         },
+        {
+          path: '/blogs',
+          component: '@/layouts/BlogLayout',
+          routes: [
+            {
+              path: '/blogs',
+              component: '@/pages/blogs/index',
+              exact: true,
+            },
+            {
+              path: '/blogs/:id',
+              component: '@/pages/blogs/detail',
+            },
+          ],
+        },
       ],
     },
   ],

@@ -1,3 +1,8 @@
+---
+date: 2020-1-15
+tags: ['node', 'yarn']
+---
+
 > 还是等社区用的人多了再用吧，初步试用了下有好多坑。。。
 
 ## 概述
@@ -17,17 +22,17 @@ Yarn 的 PnP 特性就是解决 Node 包管理低效的问题，开启 PnP 特�
       {
         packageLocation: path.resolve(
           __dirname,
-          '../../Library/Caches/Yarn/v6/npm-react-16.13.1-2e818822f1a9743122c063d6410d85c1e3afe48e-integrity/node_modules/react/'
+          '../../Library/Caches/Yarn/v6/npm-react-16.13.1-2e818822f1a9743122c063d6410d85c1e3afe48e-integrity/node_modules/react/',
         ),
         packageDependencies: new Map([
           ['loose-envify', '1.4.0'],
           ['object-assign', '4.1.1'],
           ['prop-types', '15.7.2'],
-          ['react', '16.13.1']
-        ])
-      }
-    ]
-  ])
+          ['react', '16.13.1'],
+        ]),
+      },
+    ],
+  ]),
 ];
 ```
 
