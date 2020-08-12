@@ -1,6 +1,7 @@
 ---
 date: 2020-1-15
 tags: ['css']
+skip: true
 ---
 
 https://stackoverflow.com/questions/43532191/update-css-module-variables-from-javascript

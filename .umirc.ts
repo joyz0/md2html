@@ -9,7 +9,8 @@ export default defineConfig({
       path: '/',
       component: '@/layouts/BasicLayout',
       routes: [
-        { path: '/', component: '@/pages/index' },
+        { path: '/', redirect: '/welcome' },
+        { path: '/welcome', component: '@/pages/welcome' },
         {
           path: '/demos',
           component: '@/layouts/DemoLayout',
@@ -31,9 +32,12 @@ export default defineConfig({
             },
             {
               path: '/blogs/:id',
-              component: '@/pages/blogs/detail',
+              component: '@/pages/blogs/Detail',
             },
           ],
+        },
+        {
+          component: '@/pages/exception/404',
         },
       ],
     },

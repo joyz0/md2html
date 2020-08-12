@@ -1,3 +1,9 @@
+---
+date: 2020-1-15
+tags: ['react']
+skip: true
+---
+
 ## 协调阶段
 
 - getDerivedStateFromProps(ReactFiberClassComponent.js)

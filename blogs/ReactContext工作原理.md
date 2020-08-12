@@ -1,3 +1,9 @@
+---
+date: 2020-1-15
+complexity: hard
+tags: ['react']
+---
+
 其实 ReactContext 的工作原理很简单，它利用了 JS 对象是引用类型的特点，在 createContext 时同时使 Provider 和 Consumer 持有 Context 的引用，当 Provider 组件接收 value 属性时更改 Context 引用的`_currentValue`值，在渲染 Consumer 时自然能获取修改后的`_currentValue`值。
 
 举个直白的例子：
@@ -9,11 +15,11 @@ const React = {
       $$typeof: 'REACT_CONTEXT_TYPE',
       _currentValue: defaultValue,
       Provider: null,
-      Consumer: null
+      Consumer: null,
     };
     context.Provider = {
       $$typeof: 'REACT_PROVIDER_TYPE',
-      _context: context
+      _context: context,
     };
     context.Consumer = context;
     return context;
@@ -22,31 +28,35 @@ const React = {
     let props = {};
     if (config != null) {
       props = {
-        ...config
+        ...config,
       };
     }
     props.children = children;
     return {
       $$typeof: 'REACT_ELEMENT_TYPE',
       type: type,
-      props: props
+      props: props,
     };
   },
   isValidElement(object) {
     return (
-      typeof object === 'object' && object !== null && object.$$typeof === 'REACT_ELEMENT_TYPE'
+      typeof object === 'object' &&
+      object !== null &&
+      object.$$typeof === 'REACT_ELEMENT_TYPE'
     );
-  }
+  },
 };
 const NameContext = React.createContext({
-  name: '朱亘'
+  name: '朱亘',
 });
 const pendingState = { name: '朱一旦' };
 
 const NameProvider = React.createElement(
   NameContext.Provider,
   { value: pendingState },
-  React.createElement(NameContext.Consumer, null, value => console.log(value.name))
+  React.createElement(NameContext.Consumer, null, value =>
+    console.log(value.name),
+  ),
 );
 // 等价于JSX
 // <NameContext.Provider value={pendingState}>

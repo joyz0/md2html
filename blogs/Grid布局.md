@@ -1,9 +1,10 @@
 ---
 date: 2020-1-15
 tags: ['css']
+skip: true
 ---
 
-![Grid](../assets/blogs/grid.png)
+![Grid](images/grid.png)
 
 Grid 是一种二维布局，如上图所示，CSS 代码如下：
 

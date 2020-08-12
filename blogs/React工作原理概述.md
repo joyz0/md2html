@@ -19,7 +19,7 @@ V16 之前的 React，触发一次渲染，所有操作都是同步的，包括�
 
 两者整体流程线是差不多的，当然也会有区别，在第一次挂载时会先创建如下的结构：
 
-![](../assets/blogs/react_dom_render.png)
+![](images/react_dom_render.png)
 
 两种渲染的整体流程线对比如下：
 

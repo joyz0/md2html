@@ -1,85 +1,101 @@
 const fs = require('fs');
+const fse = require('fs-extra');
 const { inspect } = require('util');
 const mkdirp = require('mkdirp');
 const path = require('path');
 const chalk = require('chalk');
 const fm = require('front-matter');
 const cryptoMd5 = require('md5');
+const { replaceStrByConfig, isBlogExist } = require('./utils');
+const {
+  cacheDir,
+  manifestFile,
+  sourceDir,
+  mdCacheDir,
+  replaceConfig,
+  fileCopyConfig,
+} = require('../config/buildSettings').blogs;
 
-const CACHE_PATH = path.resolve(__dirname, '../.blogs');
-const MD_CACHE_PATH = path.join(CACHE_PATH, 'md');
-const MANIFEST_FILE = path.join(CACHE_PATH, 'manifest.js');
-const DTS_FILE = path.join(CACHE_PATH, 'blog.d.ts');
-const BLOG_PATH = path.resolve(__dirname, '../src/blogs');
+const DTS_FILE = path.join(cacheDir, 'blog.d.ts');
 
-initBlogs();
+preBuild();
 
 let manifest;
-if (fs.existsSync(MANIFEST_FILE)) {
-  manifest = require(MANIFEST_FILE);
+if (fs.existsSync(manifestFile)) {
+  manifest = require(manifestFile);
 } else {
   manifest = {
     index: 0,
-    infos: {},
+    cache: {},
   };
 }
-let { index, infos } = manifest;
+let { index, cache } = manifest;
 
-fs.readdirSync(BLOG_PATH).forEach(file => {
-  const pth = path.resolve(BLOG_PATH, file);
+fs.readdirSync(sourceDir).forEach(file => {
+  const pth = path.resolve(sourceDir, file);
   const stat = fs.statSync(pth);
   if (stat.isFile() && /.md$/.test(file)) {
-    const name = file.slice(0, file.lastIndexOf('.'));
+    const filename = file.slice(0, file.lastIndexOf('.'));
     let data = fs.readFileSync(pth, { encoding: 'utf-8' });
     // 提取YAML头部
     const content = fm(data);
-
-    if (!infos[name]) {
+    if (content.attributes.skip) {
+      // 不需要发布的博客
+      return;
+    }
+    if (!isBlogExist(filename, cache)) {
       index = index + 1;
-      infos[name] = { id: index };
+      cache[index] = {
+        id: index,
+        filename,
+      };
+    }
+    // 替换文本
+    if (Array.isArray(replaceConfig)) {
+      content.body = replaceStrByConfig(content.body, replaceConfig);
     }
     const md5 = cryptoMd5(content.body);
-    if (infos[name].md5 !== md5) {
-      fs.writeFileSync(path.join(MD_CACHE_PATH, `${index}.md`), content.body, {
+    if (cache[index].md5 !== md5) {
+      fs.writeFileSync(path.join(mdCacheDir, `${index}.md`), content.body, {
         encoding: 'utf-8',
       });
-      infos[name].md5 = md5;
+      cache[index].md5 = md5;
     }
 
-    fillFrontMatter(infos[name], {
-      title: name,
-      ...content.attributes,
-    });
+    Object.assign(cache[index], content.attributes);
   }
 });
 
-fs.writeFileSync(MANIFEST_FILE, stringifyManifest(), {
+// 生成 Manifest 文件
+fs.writeFileSync(manifestFile, generateManifest(), {
   encoding: 'utf-8',
 });
 
-function fillFrontMatter(file, attributes) {
-  file.title = attributes.title;
-  file.description = attributes.description || '';
-  file.date = attributes.date || '';
-  file.author = attributes.author || '';
-  file.tags = attributes.tags || [];
+// 如果有需要copy的文件
+if (Array.isArray(fileCopyConfig)) {
+  fileCopyConfig.forEach(({ from, to }) => {
+    fse.copySync(from, to);
+  });
 }
 
-function stringifyManifest() {
-  return (
-    `module.exports = {\n` +
-    `index: ${index},\n` +
-    `infos: ${inspect(infos)}` +
-    `}`
-  );
+console.log(chalk.green('Build Success!'));
+
+function generateManifest() {
+  return `
+module.exports = {
+  index: ${index},
+  cache: ${inspect(cache)}
+}
+`;
 }
 
-function initBlogs() {
+function preBuild() {
   const dtsTmp = `
 export interface Blog {
   id: number;
   md5: string;
-  title: string;
+  filename: string;
+  title?: string;
   description?: string;
   date?: string;
   author?: string;
@@ -88,19 +104,14 @@ export interface Blog {
 }
 export interface ManifestBlog {
   index: number;
-  infos: {
+  cache: {
     [key: string]: Blog;
   };
 }
 `;
-  if (!fs.existsSync(MD_CACHE_PATH)) {
-    const made = mkdirp.sync(MD_CACHE_PATH);
+  if (!fs.existsSync(mdCacheDir)) {
+    const made = mkdirp.sync(mdCacheDir);
+    fs.writeFileSync(DTS_FILE, dtsTmp, { encoding: 'utf-8' });
     console.log(chalk.green(`Made directories, starting with ${made}`));
   }
-  fs.writeFile(DTS_FILE, dtsTmp, { encoding: 'utf-8' }, err => {
-    if (err) throw err;
-    console.log(chalk.green(`${path.basename(DTS_FILE)} has been created!`));
-  });
 }
-
-console.log(chalk.green('Build Success!'));

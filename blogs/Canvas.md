@@ -1,6 +1,7 @@
 ---
 date: 2020-1-15
 tags: ['canvas']
+skip: true
 ---
 
 https://www.runoob.com/w3cnote/html5-canvas-intro.html
