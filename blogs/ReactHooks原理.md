@@ -1,7 +1,7 @@
 ---
 date: 2020-1-15
 complexity: hard
-tags: ['react']
+tags: ['react', 'react-hooks']
 ---
 
 本文不会介绍关于 hooks 的用法，官网已经有了详尽的说明。主要从源码实现层面来理一理 hooks 的运作机制（目前主要讲解 useState、useReducer 和 useEffect），会涉及到一些 reconciler 的知识，并且以几个 hooks 使用的注意事项作为引子进行探索。

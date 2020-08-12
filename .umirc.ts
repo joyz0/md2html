@@ -23,6 +23,9 @@ export default defineConfig({
               path: '/demos/react-ref-confused',
               component: '@/pages/demos/ReactRefConfused',
             },
+            {
+              component: '@/pages/exception/404',
+            },
           ],
         },
         {
@@ -37,6 +40,9 @@ export default defineConfig({
             {
               path: '/blogs/:id',
               component: '@/pages/blogs/Detail',
+            },
+            {
+              component: '@/pages/exception/404',
             },
           ],
         },
