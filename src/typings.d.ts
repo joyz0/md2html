@@ -42,4 +42,6 @@ interface NoArgFn<T> {
 
 declare let ga: Function;
 
+declare let hljs: any;
+
 declare const REACT_APP_ENV: 'test' | 'dev' | 'pre' | false;

@@ -19,6 +19,10 @@ export default defineConfig({
               path: '/demos/react-hook-impl',
               component: '@/pages/demos/ReactHookImpl',
             },
+            {
+              path: '/demos/react-ref-confused',
+              component: '@/pages/demos/ReactRefConfused',
+            },
           ],
         },
         {
