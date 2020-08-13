@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const A = 0b0000000000000001;
+const B = 0b0000000000000010;
+const C = 0b0000000000000100;
+const D = 0b0000000000001000;
+const E = 0b0000000000010000;
+
+const AB = A | B;
+const CD = C | D;
+
+let current = random();
+if (current & AB) {
+  console.log('属于AB');
+} else if (current & CD) {
+  console.log('属于CD');
+} else {
+  console.log('属于E');
+}
+function random() {
+  const pool = [A, B, C, D, E];
+  return pool[Math.floor(5 * Math.random())];
+}
+  </script>
+</body>
+</html>

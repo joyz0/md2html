@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useRef,
   RefObject,
+  useLayoutEffect,
 } from 'react';
 
 const MeasureExample: React.FC = () => {
@@ -22,6 +23,12 @@ const MeasureExample: React.FC = () => {
   }, []);
   const measureRef2 = useRef<HTMLHeadingElement>(null);
 
+  useEffect(() => {
+    console.log('first mounted', 'useEffect');
+  });
+  useLayoutEffect(() => {
+    console.log('first mounted', 'useLayoutEffect');
+  });
   useEffect(() => {
     console.log('object.current', measureRef2.current);
   }, [measureRef2.current]);

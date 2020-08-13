@@ -95,66 +95,61 @@ function scheduleUpdateOnFiber(fiber, lane, eventTime) {
         function performUnitOfWork(unitOfWork: Fiber) {
           // ReactFiberBeginWork.js
           function beginWork(current: Fiber, workInProgress, renderLanes) {
-            function updateFunctionComponent(
-              current,
+            function mountIndeterminateComponent(
+              _current,
               workInProgress,
               Component,
-              nextProps,
               renderLanes,
             ) {
-              // diff
-              reconcileChildren(
-                current,
+              value = renderWithHooks(
+                null,
                 workInProgress,
-                nextChildren,
+                Component,
+                props,
+                context,
                 renderLanes,
               );
+              // ✨遍历后代节点，从props.children中获得后代信息，再连接到fiber.child上
+              reconcileChildren(null, workInProgress, value, renderLanes);
             }
             switch (workInProgress.tag) {
-              case FunctionComponent: {
-                const Component = workInProgress.type;
-                return updateFunctionComponent(
+              case IndeterminateComponent: {
+                return mountIndeterminateComponent(
                   current,
                   workInProgress,
-                  Component,
-                  resolvedProps,
+                  workInProgress.type,
                   renderLanes,
                 );
               }
-              case ClassComponent: {
-                const Component = workInProgress.type;
-                return updateClassComponent(
-                  current,
-                  workInProgress,
-                  Component,
-                  resolvedProps,
-                  renderLanes,
-                );
-              }
+              case FunctionComponent:
+              case ClassComponent:
+              case HostComponent: // 原生Dom标签
             }
           }
           // 从WIP.alternate中获得当前fiber
           const current = unitOfWork.alternate;
-          // ✨begin work，新老fiber做对比
+          // ✨每次beginWork负责一层子节点的遍历，并返回下一个节点
+          // （不确定同层兄弟节点是否在一次beginWork中，可以阅读reconcileChildrenArray方法）
           let next = beginWork(current, unitOfWork, subtreeRenderLanes);
           if (next === null) {
-            // ✨If this doesn't spawn new work, complete the current work.
-            // 与performUnitOfWork相反，向上遍历
+            // ✨说明已经遍历到最底层，不再有子节点了
+            // If this doesn't spawn new work, complete the current work.
+            // 🌈与performUnitOfWork相反，向上遍历，待调试探索
             completeUnitOfWork(unitOfWork);
           } else {
             workInProgress = next;
           }
         }
         while (workInProgress !== null) {
-          // 开始执行work，向下遍历
+          // ✨遍历WIP树，每次performUnitOfWork负责一层？子节点的遍历，内部调用一次beginWork
           performUnitOfWork(workInProgress);
         }
       }
       workLoopSync();
     }
-    // Render/reconciliation 阶段，向下遍历
+    // ✨Render/reconciliation 阶段，向下遍历，根据props.children构建成fiber链表
     renderRootSync(root, lanes);
-    // Commit阶段，遍历
+    // 🌈Commit阶段，遍历，待调试探索
     commitRoot(root);
   }
   // 从当前fiber向上遍历到root，并返回fiberRoot（应该是考虑到子节点也可能对父节点产生影响所以追溯到root再统一处理rootFiber.updateQueue）
