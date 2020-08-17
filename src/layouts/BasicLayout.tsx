@@ -9,7 +9,7 @@ const BasicLayout: React.FC = ({ children }) => {
       <div className={styles.header}>
         <BasicHeader></BasicHeader>
       </div>
-      <div className={classNames('container', styles.content)}>{children}</div>
+      <div className={styles.content}>{children}</div>
     </div>
   );
 };

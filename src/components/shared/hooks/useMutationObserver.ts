@@ -1,19 +1,19 @@
 import React, { useEffect, useLayoutEffect, DependencyList } from 'react';
 
 export const useMutationObserver = (
-  node: Node | null,
+  node: { current: Node | null },
   options: MutationObserverInit,
   callback: Function,
-  deps: DependencyList,
 ) => {
   let observer: MutationObserver;
   useLayoutEffect(() => {
-    if (!node || observer) {
+    if (!node.current || observer) {
       return;
     }
     observer = new MutationObserver(() => {
+      // 不要在callback中修改dom，否则会死循环
       callback();
     });
-    observer.observe(node, options);
-  }, deps);
+    observer.observe(node.current, options);
+  }, []);
 };

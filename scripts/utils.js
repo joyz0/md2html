@@ -5,8 +5,8 @@ function replaceStrByConfig(str, config) {
 }
 
 function isBlogExist(filename, cache) {
-  for (const blog in cache) {
-    if (blog.filename === filename) {
+  for (const id in cache) {
+    if (cache[id].filename === filename) {
       return true;
     }
   }

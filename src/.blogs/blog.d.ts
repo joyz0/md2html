@@ -7,6 +7,7 @@ export interface Blog {
   description?: string;
   date?: string;
   author?: string;
+  categories?: [string, string];
   tags?: string[];
   complexity: 'easy' | 'ordinary' | 'hard';
 }

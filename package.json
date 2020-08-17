@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "start": "umi dev",
+    "start": "node scripts/buildBlogs.js && umi dev",
     "build": "umi build",
     "build:blog": "node scripts/buildBlogs.js",
     "postinstall": "umi generate tmp",

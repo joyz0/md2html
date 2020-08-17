@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { ConnectProps, Redirect, history } from 'umi';
 import mdConstructor from 'markdown-it';
-import { useMutationObserver } from '@/components/shared/hooks';
+import { useMutationObserver, useMeasureDom } from '@/components/shared/hooks';
+import classNames from 'classnames';
 import styles from './detail.less';
 
 const md = mdConstructor('commonmark');
@@ -12,17 +13,16 @@ const Detail: React.FC<ConnectProps<{ id: string }>> = props => {
   const id = props.match?.params.id;
 
   useMutationObserver(
-    mdRef.current,
+    mdRef, // 这里如果使用mdRef.current，第一次会是null，因为是值类型
     {
       childList: true,
-      subtree: true,
     },
     () => {
       document.querySelectorAll('pre code').forEach(block => {
         hljs.highlightBlock(block);
+        hljs.lineNumbersBlock(block);
       });
     },
-    [mdRef.current],
   );
 
   useEffect(() => {
@@ -33,17 +33,19 @@ const Detail: React.FC<ConnectProps<{ id: string }>> = props => {
       history.replace('/404');
     }
   }, [id]);
+
   console.log(props);
   return (
-    <div className={styles.blogDetail}>
-      <div
-        data-test="1"
-        className={styles.content}
-        ref={mdRef}
-        // dangerouslySetInnerHTML={{ __html: mdStr }}
-      >
-        {mdStr}
+    <div className={styles.blogContainer}>
+      <div className={styles.left}>1</div>
+      <div className={styles.middle}>
+        <div
+          className={classNames(styles.content, 'atom-one-dark')}
+          ref={mdRef}
+          dangerouslySetInnerHTML={{ __html: mdStr }}
+        ></div>
       </div>
+      <div className={styles.right}>3</div>
     </div>
   );
 };

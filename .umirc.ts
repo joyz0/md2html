@@ -20,6 +20,10 @@ export default defineConfig({
               component: '@/pages/demos/ReactHookImpl',
             },
             {
+              path: '/demos/react-context-impl',
+              component: '@/pages/demos/ReactContextImpl',
+            },
+            {
               path: '/demos/react-ref-confused',
               component: '@/pages/demos/ReactRefConfused',
             },
@@ -30,21 +34,12 @@ export default defineConfig({
         },
         {
           path: '/blogs',
-          component: '@/layouts/BlogLayout',
-          routes: [
-            {
-              path: '/blogs',
-              component: '@/pages/blogs/index',
-              exact: true,
-            },
-            {
-              path: '/blogs/:id',
-              component: '@/pages/blogs/Detail',
-            },
-            {
-              component: '@/pages/exception/404',
-            },
-          ],
+          component: '@/pages/blogs/index',
+          exact: true,
+        },
+        {
+          path: '/blogs/:id',
+          component: '@/pages/blogs/Detail',
         },
         {
           component: '@/pages/exception/404',

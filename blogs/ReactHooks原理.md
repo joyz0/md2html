@@ -173,7 +173,7 @@ useXXX 实际调用的是 ReactCurrentDispatcher.current.useXXX 方法，它会�
 
 - 只在顶层调用 hooks，不要在循环、条件或嵌套函数内部调用 hooks
 
-hooks 在内部会
+useXXX 内部会通过 mountWorkInProgressHook 将 hooks 按调用次序挂载到 workInProgressHook 链表上，并存储到 currentlyRenderingFiber.memoizedState 上，下一次渲染会通过 updateWorkInProgressHook 依次从 currentlyRenderingFiber.memoizedState 获取。
 
 - 不要在顶层使用 hooks 的 setXXX 动作函数，会形成死循环（React 会报错）
 

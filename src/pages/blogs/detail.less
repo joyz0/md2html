@@ -1,14 +1,54 @@
 @import '~@/components/shared/less/index.less';
+@import '~@/components/shared/less/markdown/atom-one-dark.less';
 
-.blogDetail {
-  > .title {
+.blogContainer {
+  display: flex;
+  > .left {
+    flex: 0 0 0%;
   }
-  > .description {
+  > .middle {
+    flex: 0 0 100%;
+    min-width: 0;
+    > .title {
+    }
+    > .description {
+    }
+    > .share {
+    }
+    > .content {
+    }
+    > .comment {
+    }
   }
-  > .share {
+  > .right {
+    flex: 0 0 0%;
   }
-  > .content {
+}
+@media (min-width: 576px) {
+  .blogContainer {
+    > .right {
+      flex: 0 0 20%;
+    }
+    > .middle {
+      flex: 0 0 80%;
+    }
   }
-  > .comment {
+}
+@media (min-width: 768px) {
+  .blogContainer {
+  }
+}
+@media (min-width: 992px) {
+  .blogContainer {
+    > .left {
+      flex: 0 0 20%;
+    }
+    > .middle {
+      flex: 0 0 60%;
+    }
+  }
+}
+@media (min-width: 1200px) {
+  .blogContainer {
   }
 }

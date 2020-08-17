@@ -1,6 +1,6 @@
 
 module.exports = {
-  index: 4,
+  index: 8,
   cache: {
   '1': {
     id: 1,
@@ -19,19 +19,53 @@ module.exports = {
   },
   '3': {
     id: 3,
-    filename: 'ReactHooks原理',
-    md5: 'de2040c7e9ca3f46804fa200e3321e05',
+    filename: 'ReactFiber概述',
+    md5: '88de7f28f46aba731547e32d91a69f59',
     date: '2020-1-15',
     complexity: 'hard',
     tags: [ 'react' ]
   },
   '4': {
     id: 4,
-    filename: 'React工作原理概述',
-    md5: 'fd7fb2f99b6d199637c56a7c8ddd08da',
+    filename: 'ReactHooks原理',
+    md5: '0f2a7487872f297b23ae5577091eb330',
     date: '2020-1-15',
     complexity: 'hard',
+    categories: [ 'react', 'hooks' ],
     tags: [ 'react' ]
+  },
+  '5': {
+    id: 5,
+    filename: 'ReactRef工作原理',
+    md5: '03d6a8d4fc69002f80e1863ac1104f42',
+    date: '2020-8-13',
+    complexity: 'hard',
+    categories: [ 'react', 'hooks' ],
+    tags: [ 'react' ]
+  },
+  '6': {
+    id: 6,
+    filename: 'React渲染流程',
+    md5: 'a7a1b71883567bd7e3cef102d8d569d9',
+    date: '2020-8-14',
+    complexity: 'hard',
+    tags: [ 'react' ]
+  },
+  '7': {
+    id: 7,
+    filename: '编程中的奇技淫巧',
+    md5: '3e84f72b38b601ad7cb43be786462637',
+    date: '2020-8-13',
+    tags: [ 'tips' ]
+  },
+  '8': {
+    id: 8,
+    filename: '英文范式',
+    md5: 'fc02d0ec7463cd3815735b27d952eda2',
+    date: '2020-8-14',
+    tags: [ 'english' ],
+    complexity: 'hard',
+    categories: [ 'react', 'hooks' ]
   }
 }
 }

@@ -1,14 +1,9 @@
 import React, { useState, useReducer, useEffect } from 'react';
+import { useMockRender } from '@/components/shared/hooks';
 
 interface WorkHook {
   memoriedState: any;
   next: WorkHook | undefined;
-}
-
-// 为了触发组件重渲
-function useMockRender() {
-  const [_, mockRender] = useState<number>(0);
-  return [mockRender];
 }
 
 let firstWorkHook: WorkHook = {
