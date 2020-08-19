@@ -1,0 +1,65 @@
+
+<h2 id="slug-slug-4dfaf">几种使用方法</h2>
+<p>如下列举了几种 ref 的使用方法，比较一下区别，</p>
+<pre><code>const MeasureExample: React.FC = () => {
+  const measureRef1 = useRef&#x3C;HTMLParagraphElement>(null);
+  const measureRef2 = useCallback(node => {
+    // 调用了一次
+  }, []);
+  const measureRef3 = node => {
+    // 调用了多次
+  };
+
+  useEffect(() => {
+    // 我遇到了这里访问measureRef1.current = null的情况，不知道为什么（我当时用了dangerouslySetInnerHTML）！
+  }, []);
+  useEffect(() => {
+    // 官方不建议把ref当作deps，为什么？
+  }, [measureRef1.current]);
+
+  return (
+    &#x3C;>
+      &#x3C;p ref={measureRef1}>1&#x3C;/p>
+      &#x3C;p ref={measureRef2}>2&#x3C;/p>
+      &#x3C;p ref={measureRef3}>3&#x3C;/p>
+    &#x3C;/>
+  );
+};
+</code></pre>
+<h2 id="slug-slug-64411">源码赋值 ref 处</h2>
+<pre><code>// ReactFiberCommitWork.js
+function commitAttachRef(finishedWork: Fiber) {
+  // 赋值
+}
+function commitDetachRef(current: Fiber) {
+  // 重置ref
+}
+function safelyDetachRef(current: Fiber) {
+  // 重置ref
+}
+</code></pre>
+<p>commitAttachRef 方法向上追溯的调用栈如下，</p>
+<pre><code>// ReactFiberWorkLoop.js
+├── commitRoot() // Commit阶段
+  ├── commitRootImpl()
+    ├── commitLayoutEffects()
+      ├── commitLayoutEffectsImpl()
+        ├── commitAttachRef()
+</code></pre>
+<p>commitDetachRef 方法向上追溯的调用栈如下，</p>
+<pre><code>// ReactFiberWorkLoop.js
+├── commitRoot() // Commit阶段
+  ├── commitRootImpl()
+    ├── commitMutationEffects()
+      ├── commitMutationEffectsImpl()
+        ├── commitDetachRef()
+</code></pre>
+<h2 id="slug-slug-09b54">总结</h2>
+<ul>
+  <li>
+    <p>在 createElement 时，不会把 ref 放到 props 属性中，但可以取别名或者使用 forwardRef。</p>
+  </li>
+  <li>
+    <p>不建议在 hooks deps 使用 ref 获取的 dom，比如<code>useEffect(_, [ref.current])</code>，因为 ref 的赋值是延后的（在 Commit 阶段），在 ref 改变前 render 函数已经被执行。当需要实时测量 dom 的变化，应该使用 functional ref，这会在 Commit 阶段赋值时立即被调用。</p>
+  </li>
+</ul>

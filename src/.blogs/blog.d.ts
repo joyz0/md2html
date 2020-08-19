@@ -1,4 +1,10 @@
 
+export interface Slug {
+  id: string;
+  depth: number;
+  tagName: string;
+  text: string;
+}
 export interface Blog {
   id: number;
   md5: string;
@@ -10,6 +16,7 @@ export interface Blog {
   categories?: [string, string];
   tags?: string[];
   complexity: 'easy' | 'ordinary' | 'hard';
+  slugs: Slug[];
 }
 export interface ManifestBlog {
   index: number;

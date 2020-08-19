@@ -1,9 +1,7 @@
-其实 ReactContext 的工作原理很简单，它利用了 JS 对象是引用类型的特点，在 createContext 时同时使 Provider 和 Consumer 持有 Context 的引用，当 Provider 组件接收 value 属性时更改 Context 引用的`_currentValue`值，在渲染 Consumer 时自然能获取修改后的`_currentValue`值。
 
-举个直白的例子：
-
-```jsx
-const React = {
+<p>其实 ReactContext 的工作原理很简单，它利用了 JS 对象是引用类型的特点，在 createContext 时同时使 Provider 和 Consumer 持有 Context 的引用，当 Provider 组件接收 value 属性时更改 Context 引用的<code>_currentValue</code>值，在渲染 Consumer 时自然能获取修改后的<code>_currentValue</code>值。</p>
+<p>举个直白的例子：</p>
+<pre><code>const React = {
   createContext(defaultValue) {
     const context = {
       $$typeof: 'REACT_CONTEXT_TYPE',
@@ -34,8 +32,8 @@ const React = {
   },
   isValidElement(object) {
     return (
-      typeof object === 'object' &&
-      object !== null &&
+      typeof object === 'object' &#x26;&#x26;
+      object !== null &#x26;&#x26;
       object.$$typeof === 'REACT_ELEMENT_TYPE'
     );
   },
@@ -53,9 +51,9 @@ const NameProvider = React.createElement(
   ),
 );
 // 等价于JSX
-// <NameContext.Provider value={pendingState}>
-//   <NameContext.Consumer>{value => console.log(value.name)}</NameContext.Consumer>
-// </NameContext.Provider>;
+// &#x3C;NameContext.Provider value={pendingState}>
+//   &#x3C;NameContext.Consumer>{value => console.log(value.name)}&#x3C;/NameContext.Consumer>
+// &#x3C;/NameContext.Provider>;
 
 // 模拟渲染
 function render(element) {
@@ -71,4 +69,4 @@ function render(element) {
   render(element.props.children);
 }
 render(NameProvider); // 朱一旦
-```
+</code></pre>

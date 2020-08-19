@@ -1,7 +1,8 @@
-- 与或运算来做类型判断
 
-```js
-const A = 0b0000000000000001;
+<ul>
+  <li>与或运算来做类型判断</li>
+</ul>
+<pre><code>const A = 0b0000000000000001;
 const B = 0b0000000000000010;
 const C = 0b0000000000000100;
 const D = 0b0000000000001000;
@@ -11,9 +12,9 @@ const AB = A | B;
 const CD = C | D;
 
 let current = random();
-if (current & AB) {
+if (current &#x26; AB) {
   console.log('属于AB');
-} else if (current & CD) {
+} else if (current &#x26; CD) {
   console.log('属于CD');
 } else {
   console.log('属于E');
@@ -25,4 +26,4 @@ function random() {
   const pool = [A, B, C, D, E];
   return pool[Math.floor(5 * Math.random())];
 }
-```
+</code></pre>

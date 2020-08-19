@@ -1,11 +1,13 @@
 const fs = require('fs');
 const fse = require('fs-extra');
-const { inspect } = require('util');
-const mkdirp = require('mkdirp');
 const path = require('path');
+const mkdirp = require('mkdirp');
+const { inspect } = require('util');
 const chalk = require('chalk');
 const fm = require('front-matter');
 const cryptoMd5 = require('md5');
+
+const insertSlugs = require('./insertSlugs');
 const { replaceStrByConfig, isBlogExist } = require('./utils');
 const {
   cacheDir,
@@ -56,10 +58,11 @@ fs.readdirSync(sourceDir).forEach(file => {
     }
     const md5 = cryptoMd5(content.body);
     if (cache[index].md5 !== md5) {
-      fs.writeFileSync(path.join(mdCacheDir, `${index}.md`), content.body, {
+      const { slugs, html } = insertSlugs(content.body);
+      fs.writeFileSync(path.join(mdCacheDir, `${index}.html`), html, {
         encoding: 'utf-8',
       });
-      cache[index].md5 = md5;
+      Object.assign(cache[index], { md5, slugs });
     }
 
     Object.assign(cache[index], content.attributes);
@@ -84,13 +87,21 @@ function generateManifest() {
   return `
 module.exports = {
   index: ${index},
-  cache: ${inspect(cache)}
+  cache: ${inspect(cache, {
+    depth: 3,
+  })}
 }
 `;
 }
 
 function preBuild() {
   const dtsTmp = `
+export interface Slug {
+  id: string;
+  depth: number;
+  tagName: string;
+  text: string;
+}
 export interface Blog {
   id: number;
   md5: string;
@@ -102,6 +113,7 @@ export interface Blog {
   categories?: [string, string];
   tags?: string[];
   complexity: 'easy' | 'ordinary' | 'hard';
+  slugs: Slug[];
 }
 export interface ManifestBlog {
   index: number;

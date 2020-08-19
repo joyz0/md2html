@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
-import { ConnectProps, Redirect, history } from 'umi';
-import mdConstructor from 'markdown-it';
+import { ConnectProps, Redirect, history, dynamic } from 'umi';
 import { useMutationObserver, useMeasureDom } from '@/components/shared/hooks';
 import classNames from 'classnames';
 import styles from './detail.less';
-
-const md = mdConstructor('commonmark');
 
 const Detail: React.FC<ConnectProps<{ id: string }>> = props => {
   const [mdStr, setMdStr] = useState('');
@@ -26,12 +23,26 @@ const Detail: React.FC<ConnectProps<{ id: string }>> = props => {
   );
 
   useEffect(() => {
-    try {
-      const res = require(`../../.blogs/md/${id}.md`).default;
-      setMdStr(md.render(res));
-    } catch (error) {
-      history.replace('/404');
-    }
+    import(
+      /* webpackInclude: /\.html$/ */
+      /* webpackMode: "lazy-once" */
+      /* webpackPrefetch: true */
+      /* webpackPreload: true */
+      `@/.blogs/html/4.html`
+    )
+      .then(res => {
+        setMdStr(res.default);
+      })
+      .catch(err => {
+        console.log(err);
+        // history.replace('/404');
+      });
+    // try {
+    //   const res = require(`/.blogs/html/${id}`).default;
+    //   setMdStr(res);
+    // } catch (error) {
+    //   history.replace('/404');
+    // }
   }, [id]);
 
   console.log(props);
