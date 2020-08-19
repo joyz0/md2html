@@ -23,12 +23,13 @@ const Detail: React.FC<ConnectProps<{ id: string }>> = props => {
   );
 
   useEffect(() => {
+    console.log(id);
     import(
       /* webpackInclude: /\.html$/ */
-      /* webpackMode: "lazy-once" */
+      /* webpackMode: "lazy" */
       /* webpackPrefetch: true */
       /* webpackPreload: true */
-      `@/.blogs/html/4.html`
+      '@/.blogs/html/' + id + '.html'
     )
       .then(res => {
         setMdStr(res.default);
