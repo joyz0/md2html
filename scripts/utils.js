@@ -7,10 +7,10 @@ function replaceStrByConfig(str, config) {
 function isBlogExist(filename, cache) {
   for (const id in cache) {
     if (cache[id].filename === filename) {
-      return true;
+      return id;
     }
   }
-  return false;
+  return null;
 }
 
 module.exports = {

@@ -7,7 +7,7 @@ module.exports = {
   blogs: {
     sourceDir: BLOG_SOURCE_PATH,
     cacheDir: BLOG_CACHE_PATH,
-    mdCacheDir: path.join(BLOG_CACHE_PATH, 'html'),
+    cacheHtmlDir: path.join(BLOG_CACHE_PATH, 'html'),
     manifestFile: path.join(BLOG_CACHE_PATH, 'manifest.js'),
     fileCopyConfig: [
       {

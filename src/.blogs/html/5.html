@@ -1,5 +1,5 @@
 
-<h2 id="slug-slug-4dfaf">几种使用方法</h2>
+<h2 id="slug-slug-80ae4">几种使用方法</h2>
 <p>如下列举了几种 ref 的使用方法，比较一下区别，</p>
 <pre><code>const MeasureExample: React.FC = () => {
   const measureRef1 = useRef&#x3C;HTMLParagraphElement>(null);
@@ -26,7 +26,7 @@
   );
 };
 </code></pre>
-<h2 id="slug-slug-64411">源码赋值 ref 处</h2>
+<h2 id="slug-slug-08c76">源码赋值 ref 处</h2>
 <pre><code>// ReactFiberCommitWork.js
 function commitAttachRef(finishedWork: Fiber) {
   // 赋值
@@ -54,7 +54,7 @@ function safelyDetachRef(current: Fiber) {
       ├── commitMutationEffectsImpl()
         ├── commitDetachRef()
 </code></pre>
-<h2 id="slug-slug-09b54">总结</h2>
+<h2 id="slug-slug-8f280">总结</h2>
 <ul>
   <li>
     <p>在 createElement 时，不会把 ref 放到 props 属性中，但可以取别名或者使用 forwardRef。</p>

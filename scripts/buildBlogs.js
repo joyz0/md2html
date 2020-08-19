@@ -13,16 +13,19 @@ const {
   cacheDir,
   manifestFile,
   sourceDir,
-  mdCacheDir,
+  cacheHtmlDir,
   replaceConfig,
   fileCopyConfig,
 } = require('../config/buildSettings').blogs;
 
-const DTS_FILE = path.join(cacheDir, 'blog.d.ts');
-
-preBuild();
+// 初始化缓存目录
+if (!fs.existsSync(cacheHtmlDir)) {
+  const made = mkdirp.sync(cacheHtmlDir);
+  console.log(chalk.green(`Made directories, starting with ${made}`));
+}
 
 let manifest;
+// 加载已有的manifest
 if (fs.existsSync(manifestFile)) {
   manifest = require(manifestFile);
 } else {
@@ -45,27 +48,39 @@ fs.readdirSync(sourceDir).forEach(file => {
       // 不需要发布的博客
       return;
     }
-    if (!isBlogExist(filename, cache)) {
-      index = index + 1;
-      cache[index] = {
-        id: index,
-        filename,
-      };
-    }
+
+    const md5 = cryptoMd5(content.body);
+
     // 替换文本
     if (Array.isArray(replaceConfig)) {
       content.body = replaceStrByConfig(content.body, replaceConfig);
     }
-    const md5 = cryptoMd5(content.body);
-    if (cache[index].md5 !== md5) {
-      const { slugs, html } = insertSlugs(content.body);
-      fs.writeFileSync(path.join(mdCacheDir, `${index}.html`), html, {
-        encoding: 'utf-8',
-      });
-      Object.assign(cache[index], { md5, slugs });
+
+    let findId = isBlogExist(filename, cache);
+    let findBlog;
+    if (findId) {
+      findBlog = cache[findId];
+    } else {
+      findBlog = {};
+      findId = ++index;
     }
 
-    Object.assign(cache[index], content.attributes);
+    const newBlog = {
+      id: findId,
+      filename,
+    };
+
+    const isModified = findBlog.md5 !== md5;
+    if (isModified) {
+      const { slugs, html } = insertSlugs(content.body);
+      fs.writeFileSync(path.join(cacheHtmlDir, `${findId}.html`), html, {
+        encoding: 'utf-8',
+      });
+      Object.assign(newBlog, { slugs });
+    }
+    Object.assign(newBlog, { md5 });
+    Object.assign(newBlog, content.attributes);
+    cache[findId] = newBlog;
   }
 });
 
@@ -92,39 +107,4 @@ module.exports = {
   })}
 }
 `;
-}
-
-function preBuild() {
-  const dtsTmp = `
-export interface Slug {
-  id: string;
-  depth: number;
-  tagName: string;
-  text: string;
-}
-export interface Blog {
-  id: number;
-  md5: string;
-  filename: string;
-  title?: string;
-  description?: string;
-  date?: string;
-  author?: string;
-  categories?: [string, string];
-  tags?: string[];
-  complexity: 'easy' | 'ordinary' | 'hard';
-  slugs: Slug[];
-}
-export interface ManifestBlog {
-  index: number;
-  cache: {
-    [key: string]: Blog;
-  };
-}
-`;
-  if (!fs.existsSync(mdCacheDir)) {
-    const made = mkdirp.sync(mdCacheDir);
-    fs.writeFileSync(DTS_FILE, dtsTmp, { encoding: 'utf-8' });
-    console.log(chalk.green(`Made directories, starting with ${made}`));
-  }
 }
