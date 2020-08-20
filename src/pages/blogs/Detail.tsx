@@ -25,6 +25,7 @@ const Detail: React.FC<ConnectProps<{ id: string }>> = props => {
   useEffect(() => {
     console.log(id);
     import(
+      /* webpackChunkName: "[request]" */
       /* webpackInclude: /\.html$/ */
       /* webpackMode: "lazy" */
       /* webpackPrefetch: true */
