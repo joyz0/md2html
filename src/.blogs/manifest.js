@@ -54,11 +54,8 @@ let manifest = {
   test: {
     id: 'test',
     filename: 'test',
-    slugs: [
-      { id: 'slug-ed9b1', depth: 1, tagName: 'h2', text: 'test1' },
-      { id: 'slug-2d70b', depth: 2, tagName: 'h3', text: 'test1_1' }
-    ],
-    md5: 'af437ea1faf22d104f42b386f2d0c7bb',
+    slugs: null,
+    md5: '87b0b0453a471aa8dd2464dfe1d60331',
     date: '2020-1-15',
     tags: [ 'test' ]
   },
