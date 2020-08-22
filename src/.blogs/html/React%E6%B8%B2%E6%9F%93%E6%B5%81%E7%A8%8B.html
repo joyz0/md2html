@@ -1,5 +1,5 @@
 
-<h2 id="slug-slug-6263e">初始渲染源码脉络</h2>
+<h2 id="slug-slug-aa76f">初始渲染源码脉络</h2>
 <pre><code>// V17.0.0-alpha.0
 ├── ReactDOM.render(&#x3C;App />, document.getElementById('root'))
   ├── legacyRenderSubtreeIntoContainer() => updateContainer()
@@ -31,7 +31,7 @@
             ├── requestPaint() // 告诉Scheduler在当前渲染帧末尾返还控制权，让浏览器有机会渲染，🐛待探索如何实现的
       ├── performConcurrentWorkOnRoot() // 并发
 </code></pre>
-<h2 id="slug-slug-5733f">标记点 🌈</h2>
+<h2 id="slug-slug-e5974">标记点 🌈</h2>
 <p>(1)：触发渲染主要有两种方式，第一种就是上面罗列的初始化渲染，另一种就是 setState 的更新渲染，这两种方式代码实现有重合部分，以这个函数为界，之前不同之后相同，之前部分如下，</p>
 <pre><code>// Class 组件
 ├── this.setState() // 即this.updater.enqueueSetState
@@ -46,7 +46,7 @@
 <p>(3)：之前通过 render 函数创建了 ReactElement 对象，整个组件树是通过 props.children 连结的，reconcileChildren 则会根据此转化为 fiber 链表。</p>
 <p>(4)：与 beginWork 相反，completeWork 是从叶子节点向 root 节点遍历，应该是因为 passive effect 会影响到父祖节点，所以反向将这些 effect 更新到父祖节点上。</p>
 <p>(5)：这里会调用相关 dom api 将此次渲染的变动更新到 dom 树上。</p>
-<h2 id="slug-slug-758dc">总结</h2>
+<h2 id="slug-slug-2393a">总结</h2>
 <ul>
   <li>在一棵渲染树，全局性数据都会存储在 fiberRoot 上，这也是初始化渲染会创建 fiberRoot 的原因之一吧，可以参考下面这张图片。</li>
 </ul>

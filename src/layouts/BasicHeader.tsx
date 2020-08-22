@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, history } from 'umi';
 import { Icon } from '@/components/Icon';
 import { Avatar } from '@/components/Avatar';
+import { useRafState, useWindowScroll } from '@/components/shared/hooks';
 import LogoHome from '@/assets/logo_home.png';
-import styles from './header.less';
+import styles from './basic-layout.less';
 
-export const BasicHeader = () => {
+const BasicHeader = () => {
+  const { x, y } = useWindowScroll();
+  const [opacity, setOpacity] = useRafState(0);
+  useEffect(() => {}, [y]);
   return (
-    <div className={styles.basicHeader}>
+    <div className={styles.basicHeader} style={{}}>
       <div className={styles.logo}>
         <Link to="/">
           <img src={LogoHome} alt="link to home" />
@@ -20,3 +24,5 @@ export const BasicHeader = () => {
     </div>
   );
 };
+
+export default BasicHeader;

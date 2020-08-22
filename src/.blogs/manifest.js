@@ -1,105 +1,88 @@
 
-module.exports = {
-  index: 9,
+let manifest = {
+  index: 10,
   cache: {
-  '1': {
-    id: '1',
+  PnP: {
+    id: 'PnP',
     filename: 'PnP',
-    slugs: [
-      { id: 'slug-dff0b', depth: 1, tagName: 'h2', text: '概述' },
-      { id: 'slug-3475f', depth: 1, tagName: 'h2', text: '原理' },
-      { id: 'slug-a6927', depth: 1, tagName: 'h2', text: '好处' },
-      { id: 'slug-1f5a6', depth: 1, tagName: 'h2', text: '如何使用' },
-      { id: 'slug-56879', depth: 1, tagName: 'h2', text: 'loose 模式' },
-      { id: 'slug-c936b', depth: 1, tagName: 'h2', text: '注意事项' }
-    ],
     md5: 'e5356854264482c798561cbc15d0736d',
     date: '2020-1-15',
     tags: [ 'node', 'yarn' ]
   },
-  '2': {
-    id: '2',
+  'ReactContext%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86': {
+    id: 'ReactContext%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86',
     filename: 'ReactContext工作原理',
-    slugs: null,
     md5: '9d85b9cd76206241a21f0b3da9ad93b9',
     date: '2020-1-15',
     complexity: 'hard',
     tags: [ 'react' ]
   },
-  '3': {
-    id: '3',
+  'ReactFiber%E6%A6%82%E8%BF%B0': {
+    id: 'ReactFiber%E6%A6%82%E8%BF%B0',
     filename: 'ReactFiber概述',
-    slugs: null,
     md5: '88de7f28f46aba731547e32d91a69f59',
     date: '2020-1-15',
     complexity: 'hard',
     tags: [ 'react' ]
   },
-  '4': {
-    id: '4',
+  'ReactHooks%E5%8E%9F%E7%90%86': {
+    id: 'ReactHooks%E5%8E%9F%E7%90%86',
     filename: 'ReactHooks原理',
-    slugs: null,
     md5: 'e50e740e95f92e9a62116fc2ea4caa57',
     date: '2020-1-15',
     complexity: 'hard',
     categories: [ 'react', 'hooks' ],
     tags: [ 'react' ]
   },
-  '5': {
-    id: '5',
+  'ReactRef%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86': {
+    id: 'ReactRef%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86',
     filename: 'ReactRef工作原理',
-    slugs: [
-      { id: 'slug-43c0d', depth: 1, tagName: 'h2', text: '几种使用方法' },
-      { id: 'slug-49ea6', depth: 1, tagName: 'h2', text: '源码赋值 ref 处' },
-      { id: 'slug-075cb', depth: 1, tagName: 'h2', text: '总结' }
-    ],
     md5: '03d6a8d4fc69002f80e1863ac1104f42',
     date: '2020-8-13',
     complexity: 'hard',
     categories: [ 'react', 'hooks' ],
     tags: [ 'react' ]
   },
-  '6': {
-    id: '6',
+  'React%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B': {
+    id: 'React%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B',
     filename: 'React渲染流程',
-    slugs: [
-      { id: 'slug-6263e', depth: 1, tagName: 'h2', text: '初始渲染源码脉络' },
-      { id: 'slug-5733f', depth: 1, tagName: 'h2', text: '标记点 🌈' },
-      { id: 'slug-758dc', depth: 1, tagName: 'h2', text: '总结' }
-    ],
     md5: '351bffb62474cc3646e3ab5cf864c58e',
     date: '2020-8-14',
     complexity: 'hard',
     tags: [ 'react' ]
   },
-  '7': {
-    id: '7',
+  test: {
+    id: 'test',
+    filename: 'test',
+    slugs: [
+      { id: 'slug-ed9b1', depth: 1, tagName: 'h2', text: 'test1' },
+      { id: 'slug-2d70b', depth: 2, tagName: 'h3', text: 'test1_1' }
+    ],
+    md5: 'af437ea1faf22d104f42b386f2d0c7bb',
+    date: '2020-1-15',
+    tags: [ 'test' ]
+  },
+  'unified%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93': {
+    id: 'unified%E4%BD%BF%E7%94%A8%E6%80%BB%E7%BB%93',
     filename: 'unified使用总结',
-    slugs: null,
     md5: 'b7abbfad50ac1d76e71eb7e989a421fe',
     date: '2020-8-19',
     tags: [ 'AST' ]
   },
-  '8': {
-    id: '8',
+  '%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%A5%87%E6%8A%80%E6%B7%AB%E5%B7%A7': {
+    id: '%E7%BC%96%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%A5%87%E6%8A%80%E6%B7%AB%E5%B7%A7',
     filename: '编程中的奇技淫巧',
-    slugs: null,
     md5: '3e84f72b38b601ad7cb43be786462637',
     date: '2020-8-13',
     tags: [ 'tips' ]
   },
-  '9': {
-    id: '9',
+  '%E8%8B%B1%E6%96%87%E8%8C%83%E5%BC%8F': {
+    id: '%E8%8B%B1%E6%96%87%E8%8C%83%E5%BC%8F',
     filename: '英文范式',
-    slugs: [
-      { id: 'slug-f32b8', depth: 1, tagName: 'h2', text: '疑问句' },
-      { id: 'slug-0f296', depth: 1, tagName: 'h2', text: '陈述句' },
-      { id: 'slug-ac8a4', depth: 1, tagName: 'h2', text: '短句' },
-      { id: 'slug-1a13a', depth: 1, tagName: 'h2', text: '方法名' }
-    ],
-    md5: 'b2c0c64dab69cd22e9e484e6f1e85cfd',
+    md5: '57253ecbf61610c28ae7bbb697bf961a',
     date: '2020-8-14',
     tags: [ 'english' ]
   }
 }
-}
+};
+module.exports = manifest;

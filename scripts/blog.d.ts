@@ -19,7 +19,7 @@ interface BlogContent {
   id: number;
   md5: string;
   filename: string;
-  slugs: Slug[];
+  slugs: Slug[] | null;
 }
 
 interface ManifestBlog {

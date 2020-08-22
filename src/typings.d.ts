@@ -1,4 +1,5 @@
 /// <reference types="react"/>
+/// <reference path="../scripts/blog.d.ts"/>
 
 declare module 'slash2';
 declare module '*.css';

@@ -1,14 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
-import { BasicHeader } from '@/components/Layout';
-import styles from './layout.less';
+import BasicHeader from './BasicHeader';
+import styles from './basic-layout.less';
 
 const BasicLayout: React.FC = ({ children }) => {
   return (
     <div className={styles.basicContainer}>
-      <div className={styles.header}>
-        <BasicHeader></BasicHeader>
-      </div>
+      <BasicHeader></BasicHeader>
       <div className={styles.content}>{children}</div>
     </div>
   );

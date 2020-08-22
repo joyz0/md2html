@@ -6,7 +6,7 @@
   <li>为 html 下的 heading 标签增加唯一 id，同时导出此 html 的锚点信息，用于构建此 html 的导航菜单</li>
 </ul>
 <p>实现此功能的核心还是转化成 AST 来做。</p>
-<p>根据 unified<a href="https://www.npmjs.com/package/unified">使用文档</a>，一个大纲代码如下所示：</p>
+<p>根据 unified<a href="https://www.npmjs.com/package/unified" target="_blank">使用文档</a>，一个大纲代码如下所示：</p>
 <pre><code>var fs = require('fs');
 var path = require('path');
 var unified = require('unified');
@@ -65,22 +65,22 @@ Input ->- | Parser | ->- Syntax Tree ->- | Compiler | ->- Output
   <li>retext (natural language)</li>
   <li>rehype (HTML)</li>
 </ul>
-<p><a href="https://github.com/remarkjs/remark">remark</a>及其附属工具族都以<code>remark-</code>开头，对应符合<a href="https://github.com/syntax-tree/mdast">mdast</a>规范的语法树。</p>
-<p><a href="https://github.com/retextjs/retext">retext</a>及其附属工具族都以<code>retext-</code>开头，对应符合<a href="https://github.com/syntax-tree/nlcst">nlcst</a>规范的语法树。</p>
-<p><a href="https://github.com/rehypejs/rehype-slugs">rehype</a>及其附属工具族都以<code>rehype-</code>开头，对应符合<a href="https://github.com/syntax-tree/hast">hast</a>规范的语法树。</p>
+<p><a href="https://github.com/remarkjs/remark" target="_blank">remark</a>及其附属工具族都以<code>remark-</code>开头，对应符合<a href="https://github.com/syntax-tree/mdast" target="_blank">mdast</a>规范的语法树。</p>
+<p><a href="https://github.com/retextjs/retext" target="_blank">retext</a>及其附属工具族都以<code>retext-</code>开头，对应符合<a href="https://github.com/syntax-tree/nlcst" target="_blank">nlcst</a>规范的语法树。</p>
+<p><a href="https://github.com/rehypejs/rehype-slugs" target="_blank">rehype</a>及其附属工具族都以<code>rehype-</code>开头，对应符合<a href="https://github.com/syntax-tree/hast" target="_blank">hast</a>规范的语法树。</p>
 <p>通常都是使用对应的<code>remark|retext|rehype-parse</code>包来完成。</p>
-<p>在 run 阶段，就是使用对应的工具族来修改对应的语法树，它的 run 阶段使用<a href="https://github.com/wooorm/trough">trough</a>来处理，灵感来自<a href="https://github.com/segmentio/ware">ware</a>，类似 Koa 的剥洋葱中间件组装形式。</p>
+<p>在 run 阶段，就是使用对应的工具族来修改对应的语法树，它的 run 阶段使用<a href="https://github.com/wooorm/trough" target="_blank">trough</a>来处理，灵感来自<a href="https://github.com/segmentio/ware" target="_blank">ware</a>，类似 Koa 的剥洋葱中间件组装形式。</p>
 <p>在 stringify 阶段，通常都是使用对应的<code>remark|retext|rehype-stringify</code>包来完成。</p>
 <p>至此应该对 unified 体系的工作流程有了大体的了解。</p>
 <p>虽然如上面介绍的，在 parse 阶段使用对应的 parser 完成解析，但我们也可以使用工具直接构建 AST，这里介绍如下几种工具，</p>
 <ul>
-  <li><a href="https://github.com/hyperhype/hyperscript">hyperscript</a></li>
-  <li><a href="https://github.com/syntax-tree/hastscript">hastscript</a> (create hast trees)</li>
-  <li><a href="https://github.com/syntax-tree/xastscript">xastscript</a> (create <a href="https://github.com/syntax-tree/xast">xast</a> trees)</li>
-  <li><a href="https://github.com/syntax-tree/unist-builder">unist-builder</a> (create any <a href="https://github.com/syntax-tree/unist">unist</a> trees)</li>
+  <li><a href="https://github.com/hyperhype/hyperscript" target="_blank">hyperscript</a></li>
+  <li><a href="https://github.com/syntax-tree/hastscript" target="_blank">hastscript</a> (create hast trees)</li>
+  <li><a href="https://github.com/syntax-tree/xastscript" target="_blank">xastscript</a> (create <a href="https://github.com/syntax-tree/xast" target="_blank">xast</a> trees)</li>
+  <li><a href="https://github.com/syntax-tree/unist-builder" target="_blank">unist-builder</a> (create any <a href="https://github.com/syntax-tree/unist" target="_blank">unist</a> trees)</li>
 </ul>
 <p>unist 是一个通用语法树规范，mdast, hast, xast, 和 nlcst 都继承自 unist。</p>
 <p>如何实现 run 阶段对应的工具包呢？</p>
-<p>可以参考我对 <a href="https://github.com/tingyur/rehype-slugs">rehype-slugs</a> 的实现，而我又是参考 <a href="https://github.com/syntax-tree/mdast-util-toc">mdast-util-toc</a> 实现的。</p>
-<p>有个类似的<a href="https://github.com/rehypejs/rehype-slug">包</a>。</p>
+<p>可以参考我对 <a href="https://github.com/tingyur/rehype-slugs" target="_blank">rehype-slugs</a> 的实现，而我又是参考 <a href="https://github.com/syntax-tree/mdast-util-toc" target="_blank">mdast-util-toc</a> 实现的。</p>
+<p>有个类似的<a href="https://github.com/rehypejs/rehype-slug" target="_blank">包</a>。</p>
 <p>注意安全性，因为由这些工具生成的内容可能会被直接用在 html 中，造成 cross-site scripting (XSS)，可以使用 rehype-sanitize 对 AST 进行安全处理，并且最好把 rehype-sanitize 放在所有 plugins 最后面，因为其他 plugins 也不一定安全。</p>

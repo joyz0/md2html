@@ -7,6 +7,11 @@
 </head>
 <body>
   <script>
+    import('file:///Users/zhuzy/tingyur/portal/test.html').then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
     const A = 0b0000000000000001;
 const B = 0b0000000000000010;
 const C = 0b0000000000000100;

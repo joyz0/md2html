@@ -7,7 +7,7 @@ const chalk = require('chalk');
 const fm = require('front-matter');
 const cryptoMd5 = require('md5');
 
-const insertSlugs = require('./insertSlugs');
+const transformBlog = require('./transformBlog');
 const { replaceStrByConfig, isBlogExist } = require('./utils');
 const {
   cacheDir,
@@ -62,7 +62,8 @@ fs.readdirSync(sourceDir).forEach(file => {
       findBlog = cache[findId];
     } else {
       findBlog = {};
-      findId = ++index;
+      findId = encodeURIComponent(filename);
+      index++;
     }
 
     const newBlog = {
@@ -72,7 +73,7 @@ fs.readdirSync(sourceDir).forEach(file => {
 
     const isModified = findBlog.md5 !== md5;
     if (isModified) {
-      const { slugs, html } = insertSlugs(content.body);
+      const { slugs, html } = transformBlog(content.body);
       fs.writeFileSync(path.join(cacheHtmlDir, `${findId}.html`), html, {
         encoding: 'utf-8',
       });
@@ -100,11 +101,12 @@ console.log(chalk.green('Build Success!'));
 
 function generateManifest() {
   return `
-module.exports = {
+let manifest = {
   index: ${index},
   cache: ${inspect(cache, {
     depth: 3,
   })}
-}
+};
+module.exports = manifest;
 `;
 }

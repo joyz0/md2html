@@ -51,6 +51,7 @@
     "html-loader": "^1.2.0",
     "md5": "^2.3.0",
     "mkdirp": "^1.0.4",
+    "rehype-attributes": "^0.0.1",
     "rehype-format": "^3.1.0",
     "rehype-sanitize": "^3.0.1",
     "rehype-slugs": "^0.0.4",

@@ -19,3 +19,5 @@ export function composeRef<T>(...refs: React.Ref<T>[]): React.Ref<T> {
 export function invariant(cond: boolean, message: string) {
   if (!cond) throw new Error(message);
 }
+
+export const isClient = typeof window === 'object';

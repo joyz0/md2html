@@ -1,0 +1,32 @@
+@import '~@/components/shared/less/index.less';
+
+.basicContainer {
+  > .basicHeader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    line-height: @static-size-800;
+    z-index: var(--layer-middle);
+    display: flex;
+    justify-items: stretch;
+    padding: 0 7%;
+    background: var(--white);
+    // filter: invert(75%);
+    box-shadow: 0 1px 50px 0 var(--gray-light);
+
+    .logo {
+      flex: auto;
+      img {
+        width: @static-size-800;
+      }
+    }
+    .search {
+    }
+    .user {
+    }
+  }
+  > .content {
+    padding-top: @static-size-800;
+  }
+}

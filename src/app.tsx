@@ -4,10 +4,12 @@ import { history, RequestConfig } from 'umi';
 import { ResponseError } from 'umi-request';
 import { queryCurrent } from './services/user';
 import defaultSettings, { DefaultSettings } from '../config/defaultSettings';
+const blogManifest = require('@/.blogs/manifest');
 
 export async function getInitialState(): Promise<{
   currentUser?: API.CurrentUser;
-  settings?: DefaultSettings;
+  settings: DefaultSettings;
+  blogs: ManifestBlog;
 }> {
   // 如果是登录页面，不执行
   if (history.location.pathname !== '/user/login') {
@@ -16,6 +18,7 @@ export async function getInitialState(): Promise<{
       return {
         currentUser,
         settings: defaultSettings,
+        blogs: blogManifest,
       };
     } catch (error) {
       history.push('/user/login');
@@ -23,6 +26,7 @@ export async function getInitialState(): Promise<{
   }
   return {
     settings: defaultSettings,
+    blogs: blogManifest,
   };
 }
 
