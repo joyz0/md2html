@@ -1,17 +1,9 @@
 // https://davidwalsh.name/browser-camera
 // https://davidwalsh.name/convert-canvas-image
-import React, {
-  createContext,
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-  useMemo,
-  RefObject,
-} from 'react';
+import React, { useState, useRef, useCallback, RefObject } from 'react';
 import PhotoPreview from '@/components/PhotoPreview';
 import Camera from '@/components/Camera';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import styles from './CameraAPI.less';
 
 // 整体尺寸以预览的高度为基准
@@ -23,7 +15,7 @@ const CameraAPI: React.FC = () => {
     (canvasRef: RefObject<HTMLCanvasElement>) => {
       if (canvasRef && canvasRef.current) {
         // 输出dataUrl
-        alert('请到控制台查看');
+        message.success('已输出dataUrl到控制台');
         console.log(canvasRef.current.toDataURL('image/png'));
       }
     },
@@ -36,8 +28,8 @@ const CameraAPI: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   return (
-    <div className={styles.takePhotos}>
-      <div className={styles.photoWrapper}>
+    <div className={styles.profilePicture}>
+      <div className={styles.photoPreviewWrapper}>
         <PhotoPreview
           height={PREVIEW_HEIGHT}
           videoRef={videoRef}
