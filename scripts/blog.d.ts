@@ -22,9 +22,11 @@ interface BlogContent {
   slugs: Slug[] | null;
 }
 
+type BlogDesc = FrontMatter & BlogContent;
+
 interface ManifestBlog {
   index: number;
   cache: {
-    [key: string]: FrontMatter & BlogContent;
+    [key: string]: BlogDesc;
   };
 }

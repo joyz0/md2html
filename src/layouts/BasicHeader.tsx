@@ -4,7 +4,7 @@ import { Icon } from '@/components/Icon';
 import { Avatar } from '@/components/Avatar';
 import { useRafState, useWindowScroll } from '@/components/shared/hooks';
 import LogoHome from '@/assets/logo_home.png';
-import styles from './basic-layout.less';
+import styles from './BasicLayout.less';
 
 const BasicHeader = () => {
   const { x, y } = useWindowScroll();

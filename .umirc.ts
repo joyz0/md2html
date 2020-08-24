@@ -35,6 +35,10 @@ export default defineConfig({
               component: '@/pages/demos/ReactRefConfused',
             },
             {
+              path: '/demos/camera-api',
+              component: '@/pages/demos/CameraAPI',
+            },
+            {
               component: '@/pages/exception/404',
             },
           ],

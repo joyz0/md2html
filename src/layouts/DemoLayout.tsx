@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './demo-layout.less';
+import styles from './DemoLayout.less';
 
 const DemoLayout: React.FC = ({ children }) => {
   return (

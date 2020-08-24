@@ -80,7 +80,9 @@ fs.readdirSync(sourceDir).forEach(file => {
       Object.assign(newBlog, { slugs });
     }
     Object.assign(newBlog, { md5 });
-    Object.assign(newBlog, content.attributes);
+    Object.assign(newBlog, content.attributes, {
+      title: content.attributes.title || filename,
+    });
     cache[findId] = newBlog;
   }
 });

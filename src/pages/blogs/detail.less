@@ -1,12 +1,12 @@
 @import '~@/components/shared/less/index.less';
 @import '~@/components/shared/less/markdown/atom-one-dark.less';
 
-.blogContainer {
+.blogWrapper {
   display: flex;
-  > .left {
+  > .blogAside {
     flex: 0 0 0%;
   }
-  > .middle {
+  > .blogContent {
     flex: 0 0 100%;
     min-width: 0;
     > .title {
@@ -20,35 +20,35 @@
     > .comment {
     }
   }
-  > .right {
+  > .blogToc {
     flex: 0 0 0%;
   }
 }
 @media (min-width: 576px) {
-  .blogContainer {
-    > .right {
+  .blogWrapper {
+    > .blogToc {
       flex: 0 0 20%;
     }
-    > .middle {
+    > .blogContent {
       flex: 0 0 80%;
     }
   }
 }
 @media (min-width: 768px) {
-  .blogContainer {
+  .blogWrapper {
   }
 }
 @media (min-width: 992px) {
-  .blogContainer {
-    > .left {
+  .blogWrapper {
+    > .blogAside {
       flex: 0 0 20%;
     }
-    > .middle {
+    > .blogContent {
       flex: 0 0 60%;
     }
   }
 }
 @media (min-width: 1200px) {
-  .blogContainer {
+  .blogWrapper {
   }
 }
