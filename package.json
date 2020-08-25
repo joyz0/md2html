@@ -6,7 +6,7 @@
     "build:blog": "node scripts/buildBlogs.js",
     "postinstall": "umi generate tmp",
     "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'",
-    "test": "umi-test",
+    "test": "umi-test src/components/PhotoPreview/__tests__/index.test.js",
     "test:coverage": "umi-test --coverage"
   },
   "gitHooks": {

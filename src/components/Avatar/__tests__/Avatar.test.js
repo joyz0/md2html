@@ -4,6 +4,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { Avatar } from '..';
 
 // https://www.robinwieruch.de/react-testing-library
+// get会报错，query返回null，find用于异步
 describe('Avatar Render', () => {
   const ERROR_URL = 'http://error.url/';
   const SUCCESS_URL =

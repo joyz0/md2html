@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, RefObject } from 'react';
 import {
   DRAWING_VIDEO_TYPE,
   DRAWING_IMAGE_TYPE,
+  DRAWING_STRING_TYPE,
   DRAWING_NONE_TYPE,
 } from './DrawingSymbols';
 import styles from './index.less';
@@ -18,6 +19,7 @@ interface PhotoPreviewProps {
   width?: number;
   height: number;
   actionCount?: number;
+  src?: string;
   imageRef?: RefObject<HTMLImageElement>;
   videoRef?: RefObject<HTMLVideoElement>;
   canvasRef: RefObject<HTMLCanvasElement>;
@@ -27,14 +29,15 @@ const PhotoPreview: React.FC<PhotoPreviewProps> = ({
   height,
   videoRef,
   imageRef,
+  src,
   actionCount = 0,
   canvasRef,
 }) => {
   // 绘制源的类型
-  const drawingType = resolveDrawingType(imageRef, videoRef);
+  const drawingType = resolveDrawingType(imageRef, videoRef, src);
   // 绘制源
-  const drawingTarget = resolveDrawingTarget(imageRef, videoRef);
-
+  const drawingTarget = resolveDrawingTarget(imageRef, videoRef, src);
+  // 设置canvas的尺寸和绘制源一样，之后会缩放
   const [canvasWidth, canvasHeight] = resolveCanvasRect(drawingTarget);
 
   // 缩放比，为了自适应高度到父节点的高度
@@ -125,11 +128,14 @@ function resolveCanvasRect(
 const resolveDrawingType = (
   imageRef?: RefObject<HTMLImageElement>,
   videoRef?: RefObject<HTMLVideoElement>,
+  src?: string,
 ) => {
   if (!!imageRef) {
     return DRAWING_IMAGE_TYPE;
   } else if (!!videoRef) {
     return DRAWING_VIDEO_TYPE;
+  } else if (!!src) {
+    return DRAWING_STRING_TYPE;
   } else {
     return DRAWING_NONE_TYPE;
   }
@@ -137,11 +143,16 @@ const resolveDrawingType = (
 const resolveDrawingTarget = (
   imageRef?: RefObject<HTMLImageElement>,
   videoRef?: RefObject<HTMLVideoElement>,
+  src?: string,
 ) => {
   if (!!imageRef) {
     return imageRef.current;
   } else if (!!videoRef) {
     return videoRef.current;
+  } else if (!!src) {
+    const image = new Image();
+    image.src = src;
+    return image;
   } else {
     return null;
   }

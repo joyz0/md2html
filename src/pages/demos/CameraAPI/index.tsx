@@ -4,7 +4,7 @@ import React, { useState, useRef, useCallback, RefObject } from 'react';
 import PhotoPreview from '@/components/PhotoPreview';
 import Camera from '@/components/Camera';
 import { Button, message } from 'antd';
-import styles from './CameraAPI.less';
+import styles from './index.less';
 
 // 整体尺寸以预览的高度为基准
 const PREVIEW_HEIGHT = 266;

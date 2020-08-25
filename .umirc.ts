@@ -36,7 +36,7 @@ export default defineConfig({
             },
             {
               path: '/demos/camera-api',
-              component: '@/pages/demos/CameraAPI',
+              component: '@/pages/demos/CameraAPI/index',
             },
             {
               component: '@/pages/exception/404',
