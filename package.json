@@ -1,4 +1,5 @@
 {
+  "name": "md2html",
   "private": true,
   "scripts": {
     "start": "node scripts/buildBlogs.js && umi dev",
