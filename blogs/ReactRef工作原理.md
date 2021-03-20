@@ -24,6 +24,7 @@ const MeasureExample: React.FC = () => {
   }, []);
   useEffect(() => {
     // 官方不建议把ref当作deps，为什么？
+    // 2020.12.3 终于知道来，这就像把window.BMap当作deps一样，React无法检测其变化，因为React的渲染流程是显示setState触发的，这也是和Vue的一个不同点，而ref存储的状态就类似全局变量。
   }, [measureRef1.current]);
 
   return (

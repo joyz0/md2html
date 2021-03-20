@@ -16,7 +16,7 @@ interface FrontMatter {
 }
 
 interface BlogContent {
-  id: number;
+  id: string;
   md5: string;
   filename: string;
   slugs: Slug[] | null;
